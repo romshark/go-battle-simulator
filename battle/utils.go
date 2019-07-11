@@ -13,17 +13,6 @@ func random(min, max float64) float64 {
 	return min + rand.Float64()*(max-min)
 }
 
-func randomInt(min, max int) int {
-	if min > max {
-		panic(errors.Errorf("min (%d) greater max (%d)", min, max))
-	}
-	n := max - min
-	if n < 1 {
-		return 0
-	}
-	return rand.Intn(n) + min
-}
-
 // luck returns true if we had luck given the chance percentage
 func luck(chance float64) bool {
 	if chance > 1 || chance < 0 {

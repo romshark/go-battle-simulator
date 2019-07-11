@@ -85,7 +85,7 @@ func NewBattle(
 				LogWriter(battle.stats),
 			)
 			if err != nil {
-				errors.Wrapf(
+				return nil, errors.Wrapf(
 					err,
 					"generating soldier for faction %s",
 					faction.Name,

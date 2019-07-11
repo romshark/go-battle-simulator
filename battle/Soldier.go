@@ -211,6 +211,12 @@ func (s *soldier) takeAction() {
 		panic(errors.Errorf("Soldier %s attacks himself", s.ID()))
 	}
 
+	panicOnErr := func(err error) {
+		if err != nil {
+			panic(err)
+		}
+	}
+
 	// Try to deal some damage to the opponent and log any event
 	damageDealt, killed, err := s.Attack(opponent)
 	switch err {
@@ -219,47 +225,46 @@ func (s *soldier) takeAction() {
 		// Decrease morale by 5%
 		moralePenalty := -0.05
 		s.AddMorale(moralePenalty)
-		s.battleLog.PushEvent(EventDodge{
+		panicOnErr(s.battleLog.PushEvent(EventDodge{
 			Attacker:      s,
 			Defernder:     opponent,
 			MoralePenalty: moralePenalty,
-		})
+		}))
 	case ErrMissed:
 		// Dammit, I missed!
 		// Decrease morale by 10%
 		moralePenalty := -.1
 		s.AddMorale(moralePenalty)
-		s.battleLog.PushEvent(EventMiss{
+		panicOnErr(s.battleLog.PushEvent(EventMiss{
 			Attacker:      s,
 			Attacked:      opponent,
 			MoralePenalty: moralePenalty,
-		})
+		}))
 	case nil:
 		if killed {
 			// F@ck yeah! I killed one!
 			// Increase morale by 50%
 			moraleBonus := 0.5
 			s.AddMorale(moraleBonus)
-			s.battleLog.PushEvent(EventKill{
+			panicOnErr(s.battleLog.PushEvent(EventKill{
 				Attacker:    s,
 				Killed:      opponent,
 				DamageDealt: damageDealt,
 				MoraleBonus: moraleBonus,
-			})
+			}))
 		} else {
 			// Fine! I dealt some damage!
 			// Increase morale by 5%
 			moraleBonus := 0.05
 			s.AddMorale(moraleBonus)
-			s.battleLog.PushEvent(EventHit{
+			panicOnErr(s.battleLog.PushEvent(EventHit{
 				Attacker:    s,
 				Attacked:    opponent,
 				DamageDealt: damageDealt,
 				MoraleBonus: moraleBonus,
-			})
+			}))
 		}
 	}
-	return
 }
 
 // calculateActionDelay calculates the delay for the next action based on
