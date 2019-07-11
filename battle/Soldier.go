@@ -204,7 +204,7 @@ func (s *soldier) takeAction() {
 		// A new opponent is found
 	default:
 		// Unexpected error
-		panic(errors.Wrap(err, "unexpected opponent seach err"))
+		panic(errors.Wrap(err, "unexpected opponent search err"))
 	}
 
 	if s.ID() == opponent.ID() {
