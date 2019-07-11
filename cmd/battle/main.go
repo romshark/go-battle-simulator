@@ -9,6 +9,7 @@ import (
 	"github.com/romshark/go-battle-simulator/battle"
 )
 
+func init()                           { rand.Seed(time.Now().Unix()) }
 func random(min, max float64) float64 { return min + rand.Float64()*(max-min) }
 
 /*************************************************************\
@@ -51,10 +52,6 @@ var confFactions = []battle.Faction{
 		},
 	},
 }
-
-/*************************************************************\
-	MAIN
-\*************************************************************/
 
 func main() {
 	btl, err := battle.NewBattle(

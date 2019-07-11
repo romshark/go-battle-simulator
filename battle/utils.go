@@ -2,14 +2,9 @@ package battle
 
 import (
 	"math/rand"
-	"time"
 
 	"github.com/pkg/errors"
 )
-
-func init() {
-	rand.Seed(time.Now().Unix())
-}
 
 func random(min, max float64) float64 {
 	if min > max {
