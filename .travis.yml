@@ -33,7 +33,7 @@ script:
   - golint -set_exit_status $(go list ./...)
 
   # Build cmd/battle
-  - go build -o battle cmd/battle
+  - go build -o battle ./cmd/battle
 
   # Run all the tests with the race detector enabled
   - overalls -project=github.com/romshark/go-battle-simulator -covermode=atomic -debug -- -race -v -coverpkg=./...
